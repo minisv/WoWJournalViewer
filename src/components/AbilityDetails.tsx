@@ -7,8 +7,7 @@ interface AbilityDetailsProps {
 }
 
 export const AbilityDetails: React.FC<AbilityDetailsProps> = ({
-                                                                encounterDetail,
-                                                                locale,
+                                                                encounterDetail
                                                               }) => {
   // 재귀적으로 섹션을 렌더링
   const renderSection = (section: Section, depth: number = 0) => {
@@ -20,18 +19,18 @@ export const AbilityDetails: React.FC<AbilityDetailsProps> = ({
         <div className={`p-4 rounded-lg ${hasSpell ? 'bg-blue-900 bg-opacity-30 border border-blue-700' : 'bg-gray-800'}`}>
           <h4 className={`font-semibold mb-2 ${hasSpell ? 'text-wow-blue' : 'text-gray-300'}`}>
             {hasSpell && '⚡ '}
-            {section.title[locale] || section.title.en_US}
+            {section.title} / {section.id}
           </h4>
 
           {section.spell && (
             <div className="mb-2 text-sm text-wow-gold">
-              🔮 스킬 ID: {section.spell.id} | {section.spell.name[locale] || section.spell.name.en_US}
+              🔮 스킬 ID: {section.spell.id} | {section.spell.name}
             </div>
           )}
 
           {section.body_text && (
             <p className="text-gray-300 text-sm whitespace-pre-wrap">
-              {section.body_text[locale] || section.body_text.en_US}
+              {section.body_text}
             </p>
           )}
         </div>
@@ -49,12 +48,12 @@ export const AbilityDetails: React.FC<AbilityDetailsProps> = ({
     <div className="mb-8">
       <div className="bg-gray-900 rounded-lg p-6 border border-gray-700">
         <h2 className="text-3xl font-bold text-wow-purple mb-2">
-          {encounterDetail.name[locale] || encounterDetail.name.en_US}
+          {encounterDetail.name}
         </h2>
 
         {encounterDetail.description && (
           <p className="text-gray-300 mb-6">
-            {encounterDetail.description[locale] || encounterDetail.description.en_US}
+            {encounterDetail.description}
           </p>
         )}
 
@@ -66,7 +65,7 @@ export const AbilityDetails: React.FC<AbilityDetailsProps> = ({
               {encounterDetail.creatures.map((creature) => (
                 <div key={creature.id} className="bg-gray-800 p-3 rounded-lg">
                   <p className="text-white font-semibold">
-                    {creature.name[locale] || creature.name.en_US}
+                    {creature.name}
                   </p>
                   <p className="text-sm text-gray-400">ID: {creature.id}</p>
                 </div>
@@ -95,7 +94,7 @@ export const AbilityDetails: React.FC<AbilityDetailsProps> = ({
               {encounterDetail.items.map((item, index) => (
                 <div key={index} className="bg-gray-800 p-3 rounded-lg">
                   <p className="text-wow-purple font-semibold">
-                    {item.item.name[locale] || item.item.name.en_US}
+                    {item.item.name}
                   </p>
                   <p className="text-sm text-gray-400">
                     ID: {item.item.id} | 수량: {item.quantity}

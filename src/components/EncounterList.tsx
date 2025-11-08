@@ -12,7 +12,6 @@ export const EncounterList: React.FC<EncounterListProps> = ({
                                                               encounters,
                                                               selectedEncounter,
                                                               onSelectEncounter,
-                                                              locale,
                                                             }) => {
   return (
     <div className="mb-8">
@@ -28,8 +27,8 @@ export const EncounterList: React.FC<EncounterListProps> = ({
                 : 'border-gray-700 bg-gray-800 hover:border-wow-purple'
             }`}
           >
-            <h4 className="font-semibold text-white text-center">
-              {encounter.name[locale] || encounter.name.en_US}
+            <h4 className="font-semibold text-gray-500 text-center">
+              {encounter.name}
             </h4>
           </button>
         ))}

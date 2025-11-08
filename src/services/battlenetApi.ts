@@ -8,6 +8,10 @@ class BattleNetApiService {
   private accessToken: string = '';
   private tokenExpiry: number = 0;
 
+  // Rate Limiting을 위한 변수
+  private lastRequestTime: number = 0;
+  private requestDelay: number = 100; // 100ms = 0.1초
+
   /**
    * Client ID와 Client Secret 설정
    */
@@ -27,6 +31,29 @@ class BattleNetApiService {
   }
 
   /**
+   * 요청 간 딜레이 설정 (밀리초 단위)
+   * @param delayMs 밀리초 단위의 딜레이 (기본값: 100ms)
+   */
+  setRequestDelay(delayMs: number) {
+    this.requestDelay = delayMs;
+  }
+
+  /**
+   * 마지막 요청 이후 필요한 만큼 대기
+   */
+  private async waitForRateLimit(): Promise<void> {
+    const now = Date.now();
+    const timeSinceLastRequest = now - this.lastRequestTime;
+
+    if (timeSinceLastRequest < this.requestDelay) {
+      const delayNeeded = this.requestDelay - timeSinceLastRequest;
+      await new Promise(resolve => setTimeout(resolve, delayNeeded));
+    }
+
+    this.lastRequestTime = Date.now();
+  }
+
+  /**
    * OAuth 토큰 발급
    */
   async getAccessToken(): Promise<string> {
@@ -41,6 +68,7 @@ class BattleNetApiService {
     }
 
     try {
+      // 토큰 발급은 Rate Limiting을 적용하지 않음 (필요한 경우만 호출)
       const credentials = btoa(`${this.clientId}:${this.clientSecret}`);
       const response = await axios.post(
         `https://${this.region}.battle.net/oauth/token`,
@@ -64,15 +92,19 @@ class BattleNetApiService {
   }
 
   /**
-   * API 요청 헬퍼
+   * API 요청 헬퍼 - Authorization 헤더에 Bearer 토큰 포함 및 Rate Limiting 적용
    */
   private async request<T>(endpoint: string, locale: Locale = 'ko_KR'): Promise<T> {
+    // Rate Limiting 적용
+    await this.waitForRateLimit();
+
     const token = await this.getAccessToken();
+
     const response = await axios.get<T>(
       `https://${this.region}.api.blizzard.com${endpoint}`,
       {
         headers: {
-          'Authorization': `Bearer ${token}`,  // ✅ Authorization 헤더로 전달
+          'Authorization': `Bearer ${token}`,
         },
         params: {
           namespace: `static-${this.region}`,
@@ -145,6 +177,25 @@ class BattleNetApiService {
    */
   isAuthenticated(): boolean {
     return !!this.clientId && !!this.clientSecret;
+  }
+
+  /**
+   * 현재 Rate Limiting 상태 조회 (디버깅용)
+   */
+  getDebugInfo(): {
+    lastRequestTime: number;
+    requestDelay: number;
+    nextAvailableTime: number;
+  } {
+    const now = Date.now();
+    const timeSinceLastRequest = now - this.lastRequestTime;
+    const nextAvailableTime = Math.max(0, this.requestDelay - timeSinceLastRequest);
+
+    return {
+      lastRequestTime: this.lastRequestTime,
+      requestDelay: this.requestDelay,
+      nextAvailableTime: nextAvailableTime,
+    };
   }
 }
 

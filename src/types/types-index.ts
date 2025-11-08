@@ -26,7 +26,7 @@ export interface KeyValue {
 
 export interface Expansion {
   id: number;
-  name: LocalizedString;
+  name: string;
   key: {
     href: string;
   };
@@ -34,24 +34,24 @@ export interface Expansion {
 
 export interface Instance {
   id: number;
-  name: LocalizedString;
+  name: string;
   map: {
-    name: LocalizedString;
+    name: string;
     id: number;
   };
   area?: {
-    name: LocalizedString;
+    name: string;
   };
-  description?: LocalizedString;
+  description?: string;
   encounters: Encounter[];
   expansion: KeyValue;
   location: {
-    name: LocalizedString;
+    name: string;
   };
   modes: Array<{
     mode: {
       type: string;
-      name: LocalizedString;
+      name: string;
     };
     players: number;
     is_tracked: boolean;
@@ -70,8 +70,8 @@ export interface Instance {
 
 export interface Encounter {
   id: number;
-  name: LocalizedString;
-  description?: LocalizedString;
+  name: string;
+  description?: string;
   key: {
     href: string;
   };
@@ -79,11 +79,11 @@ export interface Encounter {
 
 export interface EncounterDetail {
   id: number;
-  name: LocalizedString;
-  description: LocalizedString;
+  name: string;
+  description: string;
   creatures: Array<{
     id: number;
-    name: LocalizedString;
+    name: string;
     creature_display: {
       key: {
         href: string;
@@ -96,7 +96,7 @@ export interface EncounterDetail {
       key: {
         href: string;
       };
-      name: LocalizedString;
+      name: string;
       id: number;
     };
     quantity: number;
@@ -109,7 +109,7 @@ export interface EncounterDetail {
   modes: Array<{
     mode: {
       type: string;
-      name: LocalizedString;
+      name: string;
     };
     players: number;
     is_tracked: boolean;
@@ -118,8 +118,8 @@ export interface EncounterDetail {
 
 export interface Section {
   id: number;
-  title: LocalizedString;
-  body_text?: LocalizedString;
+  title: string;
+  body_text?: string;
   sections?: Section[];
   creature_display?: {
     key: {
@@ -131,7 +131,7 @@ export interface Section {
     key: {
       href: string;
     };
-    name: LocalizedString;
+    name: string;
     id: number;
   };
 }

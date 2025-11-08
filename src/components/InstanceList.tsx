@@ -12,7 +12,6 @@ export const InstanceList: React.FC<InstanceListProps> = ({
                                                             instances,
                                                             selectedInstance,
                                                             onSelectInstance,
-                                                            locale,
                                                           }) => {
   // 던전과 레이드 분류
   const dungeons = instances.filter((inst) => inst.category.type === 'DUNGEON');
@@ -35,8 +34,8 @@ export const InstanceList: React.FC<InstanceListProps> = ({
                   : 'border-gray-700 bg-gray-800 hover:border-wow-gold'
               }`}
             >
-              <h4 className="font-semibold text-white">
-                {instance.name[locale] || instance.name.en_US}
+              <h4 className="font-semibold text-gray-500">
+                {instance.name}
               </h4>
               <p className="text-sm text-gray-400 mt-1">
                 보스: {instance.encounters.length}개

@@ -299,6 +299,7 @@ function App() {
                 selectedExpansion={selectedExpansion}
                 onSelectExpansion={handleExpansionSelect}
                 locale={locale}
+                loading={loading}
               />
             )}
 
