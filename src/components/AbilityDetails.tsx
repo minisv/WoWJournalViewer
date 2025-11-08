@@ -65,9 +65,8 @@ export const AbilityDetails: React.FC<AbilityDetailsProps> = ({
               {encounterDetail.creatures.map((creature) => (
                 <div key={creature.id} className="bg-gray-800 p-3 rounded-lg">
                   <p className="text-white font-semibold">
-                    {creature.name}
+                    {creature.name} / ID: {creature.id}
                   </p>
-                  <p className="text-sm text-gray-400">ID: {creature.id}</p>
                 </div>
               ))}
             </div>
@@ -94,10 +93,7 @@ export const AbilityDetails: React.FC<AbilityDetailsProps> = ({
               {encounterDetail.items.map((item, index) => (
                 <div key={index} className="bg-gray-800 p-3 rounded-lg">
                   <p className="text-wow-purple font-semibold">
-                    {item.item.name}
-                  </p>
-                  <p className="text-sm text-gray-400">
-                    ID: {item.item.id} | 수량: {item.quantity}
+                    {item.item.name} / ID: {item.item.id}
                   </p>
                 </div>
               ))}
