@@ -27,9 +27,9 @@ export const EncounterList: React.FC<EncounterListProps> = ({
                 : 'border-gray-700 bg-gray-800 hover:border-wow-purple'
             }`}
           >
-            <h4 className="font-semibold text-gray-500 text-center">
+            <p className="text-sm text-gray-400 mt-1">
               {encounter.name}
-            </h4>
+            </p>
           </button>
         ))}
       </div>

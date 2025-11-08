@@ -34,10 +34,8 @@ export const InstanceList: React.FC<InstanceListProps> = ({
                   : 'border-gray-700 bg-gray-800 hover:border-wow-gold'
               }`}
             >
-              <h4 className="font-semibold text-gray-500">
-                {instance.name}
-              </h4>
               <p className="text-sm text-gray-400 mt-1">
+                {instance.name}<br/>
                 보스: {instance.encounters.length}개
               </p>
             </button>
