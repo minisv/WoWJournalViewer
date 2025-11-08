@@ -71,10 +71,12 @@ class BattleNetApiService {
     const response = await axios.get<T>(
       `https://${this.region}.api.blizzard.com${endpoint}`,
       {
+        headers: {
+          'Authorization': `Bearer ${token}`,  // ✅ Authorization 헤더로 전달
+        },
         params: {
           namespace: `static-${this.region}`,
           locale: locale,
-          access_token: token,
         },
       }
     );
